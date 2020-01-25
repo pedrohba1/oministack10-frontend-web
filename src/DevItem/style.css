@@ -1,0 +1,33 @@
+.delete-button {
+  padding: 3px;
+  color: #333;
+  border-radius: 25%;
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: color 0.5s;
+  float: right;
+}
+
+.delete-button:hover {
+  color: #ff6459;
+}
+
+.bottom {
+  vertical-align: bottom;
+}
+
+.edit-button {
+  padding: 3px;
+  color: #333;
+  border-radius: 25%;
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: color 0.5s;
+  float: right;
+}
+
+.edit-button:hover {
+  color: #3281a6;
+}

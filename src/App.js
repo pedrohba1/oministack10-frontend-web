@@ -6,6 +6,7 @@ import "./Main.css";
 import api from "./services/api";
 import DevItem from "./DevItem/index";
 import DevForm from "./DevForm/index";
+import findElement from "./utils/findElement";
 
 function App() {
   const [devs, setDevs] = useState([]);
@@ -26,6 +27,19 @@ function App() {
     console.log(response.data);
   }
 
+  async function handleDeleteDev(data) {
+    console.log(data);
+
+    let updatedDevs = [...devs];
+    console.log(updatedDevs);
+
+    const response = await api.delete("/devs", { data });
+
+    let element = findElement(updatedDevs, "_id", response.data._id);
+    updatedDevs.splice(element.index);
+    console.log(updatedDevs);
+    setDevs(updatedDevs);
+  }
   return (
     <div id="App">
       <aside>
@@ -35,7 +49,12 @@ function App() {
       <main>
         <ul>
           {devs.map(dev => (
-            <DevItem key={dev._id} dev={dev}></DevItem>
+            <DevItem
+              _id={dev._id}
+              key={dev._id}
+              dev={dev}
+              onDelete={handleDeleteDev}
+            ></DevItem>
           ))}
         </ul>
       </main>
