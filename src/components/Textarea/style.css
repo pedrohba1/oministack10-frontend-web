@@ -1,0 +1,46 @@
+* {
+  font-family: roboto, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  padding: 1em 1em 6em 1em;
+}
+
+p,
+label {
+  display: block;
+  margin: 0.8em 0;
+}
+
+.container {
+  position: relative;
+}
+
+.textarea {
+  margin: 10px 0;
+  width: 100%;
+  outline: none;
+  min-height: 20px;
+  max-width: 350px;
+  max-height: 100px;
+  padding: 0;
+  padding-left: 5px;
+  box-shadow: none;
+  display: block;
+  border: 1 px solid #333;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
+.textarea--ghost {
+  opacity: 0;
+  display: block;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+}

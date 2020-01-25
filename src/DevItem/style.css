@@ -31,3 +31,37 @@
 .edit-button:hover {
   color: #3281a6;
 }
+
+.dev-edit {
+  min-width: 320px;
+}
+
+.close-button {
+  padding: 3px;
+  color: #333;
+  border-radius: 25%;
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: color 0.5s;
+  float: right;
+}
+
+.close-button:hover {
+  color: #ff6459;
+}
+
+.check-button {
+  padding: 3px;
+  color: #333;
+  border-radius: 25%;
+  border: none;
+  cursor: pointer;
+  background: none;
+  transition: color 0.5s;
+  float: right;
+}
+
+.check-button:hover {
+  color: #6eff63;
+}

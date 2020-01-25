@@ -28,18 +28,29 @@ function App() {
   }
 
   async function handleDeleteDev(data) {
-    console.log(data);
-
     let updatedDevs = [...devs];
     console.log(updatedDevs);
-
     const response = await api.delete("/devs", { data });
-
     let element = findElement(updatedDevs, "_id", response.data._id);
-    updatedDevs.splice(element.index);
+    let index = updatedDevs.indexOf(element.item);
+    console.log(element.item);
+    if (index !== -1) {
+      updatedDevs.splice(element.index, 1);
+
+      console.log("antes do update");
+      console.log(updatedDevs);
+
+      setDevs(updatedDevs);
+    }
+
+    console.log("depois do update");
     console.log(updatedDevs);
-    setDevs(updatedDevs);
   }
+
+  async function handleEditDev(data) {
+    console.log(data);
+  }
+
   return (
     <div id="App">
       <aside>
@@ -54,6 +65,7 @@ function App() {
               key={dev._id}
               dev={dev}
               onDelete={handleDeleteDev}
+              onEdit={handleEditDev}
             ></DevItem>
           ))}
         </ul>
