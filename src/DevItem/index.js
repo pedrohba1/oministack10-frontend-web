@@ -7,19 +7,24 @@ import {
   faWindowClose,
   faCheck
 } from "@fortawesome/free-solid-svg-icons";
-import Textarea from "./../components/Textarea/Textarea";
+import LoadingAnimation from "./../components/LoadingAnimation.jsx";
 
 function DevItem({ dev, onDelete, onEdit, _id }) {
-  const [form, setForm] = useState("");
-  const [buttons, setButtons] = useState("");
   const [mode, setMode] = useState("");
 
+  const [name, setGithubUsername] = useState("");
+  const [techs, setTechs] = useState("");
+  const [bio, setBio] = useState("");
+
+  const [loading, setLoading] = useState("");
+
   async function handleDelete() {
-    await onDelete({ _id });
+    await onDelete({ ...dev });
   }
 
   async function handleEdit() {
-    await onEdit({ dev });
+    await onEdit({ _id: dev._id, name, techs, bio });
+    toggleMode("notEdit");
   }
 
   const toggleMode = mode => {
@@ -27,77 +32,84 @@ function DevItem({ dev, onDelete, onEdit, _id }) {
   };
 
   useEffect(() => {
-    let userInfo = (
-      <div className="user-info">
-        <strong>{dev.name}</strong>
-        <span>{dev.techs.join(", ")}</span>
-      </div>
-    );
-    let userBio = <p>{dev.bio} </p>;
+    setGithubUsername(dev.name);
+    setTechs(dev.techs.join(", "));
+    setBio(dev.bio);
+  }, []);
 
-    let buttonRight = (
-      <span onClick={() => toggleMode("edit")} className="edit-button">
-        <FontAwesomeIcon icon={faEdit} size="1x" />
-      </span>
-    );
-    let buttonLeft = (
-      <span onClick={handleDelete} className="delete-button">
-        <FontAwesomeIcon icon={faTrash} size="1x" />
-      </span>
-    );
+  if (mode === "edit") {
+    return (
+      <li className="dev-item">
+        <React.Fragment>
+          <header>
+            <img src={dev.avatar_url} alt={dev.name}></img>
+            <div className="user-info">
+              <textarea
+                className="textarea"
+                value={name}
+                onChange={e => setGithubUsername(e.target.value)}
+              ></textarea>
+              <textarea
+                className="textarea"
+                value={techs}
+                onChange={e => setTechs(e.target.value)}
+              ></textarea>
+            </div>
+          </header>
+          <textarea
+            className="textarea-bio"
+            value={bio}
+            onChange={e => setBio(e.target.value)}
+          ></textarea>
+        </React.Fragment>
 
-    if (mode === "edit") {
-      userInfo = (
-        <div className="user-info">
-          <Textarea value={dev.name}></Textarea>
-          <Textarea value={dev.techs.join(", ")}></Textarea>
+        <div className="">
+          <a className="github-link" href={`https://github.com/${dev.name}`}>
+            Acessar perfil no github
+          </a>
         </div>
-      );
-      userBio = <Textarea value={dev.bio}> </Textarea>;
-      buttonLeft = (
-        <span onClick={() => toggleMode("close")} className="close-button">
-          <FontAwesomeIcon icon={faWindowClose} size="1x" />
-        </span>
-      );
-      buttonRight = (
-        <span onClick={() => {}} className="check-button">
-          <FontAwesomeIcon icon={faCheck} size="1x" />
-        </span>
-      );
-    }
-
-    setForm(
-      <React.Fragment>
-        <header>
-          <img src={dev.avatar_url} alt={dev.name}></img>
-          {userInfo}
-        </header>
-        {userBio}
-      </React.Fragment>
+        <div className="bottom">
+          <span onClick={() => toggleMode("close")} className="close-button">
+            <FontAwesomeIcon icon={faWindowClose} size="1x" />
+          </span>
+          <span onClick={handleEdit} className="check-button">
+            <FontAwesomeIcon icon={faCheck} size="1x" />
+          </span>
+          {loading}
+        </div>
+      </li>
     );
+  } else {
+    return (
+      <li className="dev-item">
+        <React.Fragment>
+          <header>
+            <img src={dev.avatar_url} alt={dev.name}></img>
+            <div className="user-info">
+              <strong>{dev.name}</strong>
+              <span>{dev.techs.join(", ")}</span>
+            </div>
+          </header>
+          <p>{dev.bio} </p>
+        </React.Fragment>
 
-    setButtons(
-      <div className="bottom">
-        {buttonLeft}
-        {buttonRight}
-      </div>
+        <div className="">
+          <a className="github-link" href={`https://github.com/${dev.name}`}>
+            Acessar perfil no github
+          </a>
+        </div>
+        <div className="bottom">
+          <span onClick={handleDelete} className="close-button">
+            <FontAwesomeIcon icon={faTrash} size="1x" />
+          </span>{" "}
+          <span onClick={() => toggleMode("edit")} className="edit-button">
+            <FontAwesomeIcon icon={faEdit} size="1x" />
+          </span>
+          {loading}
+        </div>
+      </li>
     );
-  }, [mode]);
-
-  return (
-    <li className="dev-item">
-      {form}
-      <div className="">
-        <a
-          className="github-link"
-          href={`https://github.com/${dev.github_username}`}
-        >
-          Acessar perfil no github
-        </a>
-      </div>
-      {buttons}
-    </li>
-  );
+  }
 }
 
 export default DevItem;

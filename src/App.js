@@ -6,16 +6,15 @@ import "./Main.css";
 import api from "./services/api";
 import DevItem from "./DevItem/index";
 import DevForm from "./DevForm/index";
-import findElement from "./utils/findElement";
 
 function App() {
   const [devs, setDevs] = useState([]);
 
+  async function loadDevs() {
+    const response = await api.get("/devs");
+    setDevs(response.data);
+  }
   useEffect(() => {
-    async function loadDevs() {
-      const response = await api.get("/devs");
-      setDevs(response.data);
-    }
     loadDevs();
   }, []);
 
@@ -28,27 +27,14 @@ function App() {
   }
 
   async function handleDeleteDev(data) {
-    let updatedDevs = [...devs];
-    console.log(updatedDevs);
-    const response = await api.delete("/devs", { data });
-    let element = findElement(updatedDevs, "_id", response.data._id);
-    let index = updatedDevs.indexOf(element.item);
-    console.log(element.item);
-    if (index !== -1) {
-      updatedDevs.splice(element.index, 1);
-
-      console.log("antes do update");
-      console.log(updatedDevs);
-
-      setDevs(updatedDevs);
-    }
-
-    console.log("depois do update");
-    console.log(updatedDevs);
+    await api.delete("/devs", { data });
+    loadDevs();
   }
 
   async function handleEditDev(data) {
-    console.log(data);
+    const response = await api.put("/devs", data);
+    console.log(response);
+    await loadDevs();
   }
 
   return (
