@@ -5,4 +5,9 @@ O projeto do backend se encontra [aqui](https://github.com/pedrohba1/oministack1
 
 
 
-![Imagem do insomnia](https://github.com/pedrohba1/oministack10-frontend/blob/master/readme%20stuff/screenshot.png)
+![Imagem representando a aplicação](https://github.com/pedrohba1/oministack10-frontend/blob/master/readme%20stuff/screenshot.png)
+
+
+
+Demonstração de uso da aplicação:
+![gif de uso da aplicação]((https://github.com/pedrohba1/oministack10-frontend/blob/master/readme%20stuff/demo.gif)
